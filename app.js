@@ -38,18 +38,6 @@ app.post("/", function(req, res){
 
 });
 
-// app.get("./pythonFiles/testMap", function(req,res){
-//   const pythonProcess = spawn("python",["test.py"]);
-//   pythonProcess.stdout.on('data', function(data){
-//     mystr = data.toString();
-//     myjson = JSON.parse(mystr);
-//
-//     console.log(myjson);
-//
-//     res.render("map", {key: process.env.KEY, start: myjson.Start, end: myjson.End});
-//   });
-// });
-
 let port = process.env.PORT;
 if (port == null || port == "") {
   port = 3000;
