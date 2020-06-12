@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8" />
+    <title>Click on the map to choose a point.</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css">
+  </head>
+
+  <body>
+    <div id="map"></div>
+    <div id="mykey" data-key=<%= key %>></div>
+    <div id="points" data-results=<%= results %>></div>
+
+    <script>
+
+    mapboxgl.accessToken = document.getElementById('mykey').dataset.key;
+    let results = document.getElementById('points').dataset.results;
+
+    let pointsArray = results.split(";");
+    let start = (pointsArray[0]).split(",");
+    pointsArray.shift();
+    let services = pointsArray;
+
+
+    var map = new mapboxgl.Map({
+        container: 'map', // container id
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [parseFloat(start[0]), parseFloat(start[1])], // starting position
+        zoom: 13 // starting zoom
+    });
+
+      map.on('load', function() {
+        var pointer = document.createElement('div');
+        pointer.className = 'marker-prime';
+
+        new mapboxgl.Marker(pointer).setLngLat([parseFloat(start[0]), parseFloat(start[1])]).addTo(map);
+
+        services.forEach(function(service){
+          var point = service.split(",")
+
+          var el = document.createElement('div');
+          el.className = 'marker';
+
+          new mapboxgl.Marker(el).setLngLat([parseFloat(point[0]), parseFloat(point[1])]).addTo(map);
+        });
+
+        // var tempArray = [jsonData.lng, jsonData.lat];
+      });
+    </script>
+
+  </body>
+
+</html>

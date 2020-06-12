@@ -10,16 +10,35 @@
     <div class="container">
       <div class="jumbotron centered">
         <h1 class="display-3">Form</h1>
-        <p>Enter Start and destination coordinates in the format lat,long without spaces</p>
 
-        <form action="/" method="POST">
-
+        <form action="/findRoute" method="POST">
+          <p>1. Enter Start and destination coordinates in the format lat,long without spaces</p>
           <div class="form-group">
             <input type="text" class="form-control text-center" name="startpos" placeholder="Start Coordinates">
             <input type="text" class="form-control text-center" name="endpos" placeholder="Destination Coordinates">
           </div>
           <button type="submit" class="btn btn-dark">Submit</button>
         </form>
+
+        <br><br>
+
+        <form action="/services" method="POST">
+          <p>2. Services around a coordinate</p>
+          <div class="form-group">
+            <input type="text" class="form-control text-center" name="center" placeholder="Center coordinates">
+            <input type="text" class="form-control text-center" name="service" placeholder="Service Name">
+            <input type="text" class="form-control text-center" name="radius" placeholder="Radius in Km">
+          </div>
+          <button type="submit" class="btn btn-dark">Submit</button>
+        </form>
+
+        <br> <br>
+
+        <!-- <form action="/map" method="POST">
+          <p>2. Click the below to choose points on the map to find an optimal path between them</p>
+          <button type="submit" class="btn btn-dark">Open Map</button>
+        </form> -->
+
       </div>
     </div>
   </body>
