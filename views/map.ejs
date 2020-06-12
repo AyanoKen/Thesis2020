@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset='utf-8' />
+  <title></title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css' rel='stylesheet' />
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div id='map' class="mapboxgl-map"></div>
+
+  <div class="details">
+    <p>Distance is <%=distance%> Km</p>
+    <p>Estimated travel time is <%=time%> minutes</p>
+  </div>
+
+	<div id="mykey" data-key=<%= key %>></div>
+	<div id="mystart" data-start=<%= start %>></div>
+	<div id="myend" data-end=<%= end %>></div>
+
+
+  <script>
+    mapboxgl.accessToken = document.getElementById('mykey').dataset.key;
+    var start = (document.getElementById('mystart').dataset.start).split(","); //change the starting position here
+    var end = (document.getElementById('myend').dataset.end).split(",");  //Change the destination position here
+    var route;
+
+    start = start.reverse();
+    end = end.reverse();
+
+    var map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/streets-v10',
+      center: start, // starting position
+      zoom: 14
+    });
+
+    var url = 'https://api.mapbox.com/directions/v5/mapbox/driving/' + start[0] + ',' + start[1] + ';' + end[0] + ',' + end[1] + '?steps=true&geometries=geojson&access_token=' + mapboxgl.accessToken;
+
+    var req = new XMLHttpRequest();
+    req.open('GET', url, true);
+    req.onload = function() {
+      var json = JSON.parse(req.response);
+      var data = json.routes[0];
+      route = data.geometry.coordinates;
+      var geojson = {
+        type: 'Feature',
+        properties: {},
+        geometry: {
+          type: 'LineString',
+          coordinates: route
+        }
+      };
+    };
+    req.send();
+
+    map.on('load', function() {
+      map.addSource('route', {
+        'type': 'geojson',
+        'data': {
+          'type': 'Feature',
+          'properties': {},
+          'geometry': {
+            'type': 'LineString',
+            'coordinates': route
+          }
+        }
+      });
+      map.addLayer({
+        'id': 'route',
+        'type': 'line',
+        'source': 'route',
+        'layout': {
+          'line-join': 'round',
+          'line-cap': 'round'
+        },
+        'paint': {
+          'line-color': '#888',
+          'line-width': 8
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

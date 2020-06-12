@@ -1,0 +1,29 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.details{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #1eba47;
+    font-size: 20px;
+    text-align: center;
+    padding: 5px;
+    box-shadow: 0 0 16px black;
+    color: white;
+}
+
+p{
+  padding: 0;
+  margin: 5px;
+}
