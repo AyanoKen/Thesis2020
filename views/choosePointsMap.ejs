@@ -14,9 +14,10 @@
     <div id="map"></div>
     <div id="mykey" data-key=<%= key %>></div>
 
-    <form action="/optimalPath" method="POST">
+    <form class="details" action="/savePoints" method="POST">
       <input id="coords" type="hidden" name="points" value="">
-      <button type="submit" class="details">Calculate</button>
+      <input type="text" name="title" placeholder="Name of the set of points">
+      <button type="submit">Save Points</button>
     </form>
 
     <script>
@@ -27,7 +28,7 @@
         container: 'map', // container id
         style: 'mapbox://styles/mapbox/streets-v11',
         center: [-74.5, 40], // starting position
-        zoom: 9 // starting zoom
+        zoom: 3 // starting zoom
     });
 
       map.on('click', function(e) {

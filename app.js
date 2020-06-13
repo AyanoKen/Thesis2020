@@ -1,13 +1,24 @@
 require("dotenv").config();
 const express = require('express');
 const bodyParser = require("body-parser");
-var spawn = require("child_process").spawn;
+const spawn = require("child_process").spawn;
+const mongoose = require("mongoose");
 
 const app = express();
 
-app.use(express.static("public"));
+app.use(express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
+
+mongoose.connect("mongodb+srv://admin-kireet:"+process.env.PASSWORD+"@tsunduko-hlubr.mongodb.net/Thesis2020DB", {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.set("useCreateIndex", true);
+
+const coordinateSchema = {
+  name: String,
+  points: [String]
+};
+
+const Coordinate = mongoose.model("Coordinate", coordinateSchema);
 
 const key = process.env.KEY;
 
@@ -56,7 +67,43 @@ app.post("/services", function(req, res){
 
     res.render("servicesMap", {key: key, results: coordinates});
   });
-})
+});
+
+app.post("/savePoints", function(req, res){
+  const points = (req.body.points).split(";");
+
+  points.pop();
+
+  const newPoints = new Coordinate({
+    name: req.body.title,
+    points: points
+  });
+
+  newPoints.save(function(err){
+    if(!err){
+      res.redirect("/");
+    }else{
+      console.log(err);
+    }
+  });
+});
+
+app.post("/showPoints", function(req, res){
+  Coordinate.find({}, function(err, results){
+    if(!err){
+      let data = [];
+      results.forEach(function(result){
+        let temp = {
+          name: result.name,
+          points: result.points
+        };
+
+        data.push(temp);
+      });
+      res.send(data);
+    }
+  });
+});
 
 var port = process.env.PORT;
 if (port == null || port == "") {
