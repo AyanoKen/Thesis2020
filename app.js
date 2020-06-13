@@ -11,7 +11,6 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
 
 mongoose.connect("mongodb+srv://admin-kireet:"+process.env.PASSWORD+"@tsunduko-hlubr.mongodb.net/Thesis2020DB", {useNewUrlParser: true, useUnifiedTopology: true});
-mongoose.set("useCreateIndex", true);
 
 const coordinateSchema = {
   name: String,
