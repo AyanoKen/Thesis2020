@@ -104,6 +104,10 @@ app.post("/showPoints", function(req, res){
   });
 });
 
+app.post("/liveLocation", function(req, res){
+  res.render("liveLocation", {key: key});
+});
+
 var port = process.env.PORT;
 if (port == null || port == "") {
   port = 3000;
