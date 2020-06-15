@@ -57,14 +57,14 @@ app.post("/services", function(req, res){
   const radius = req.body.radius;
   const service = req.body.service;
 
-  const pythonProcess2 = spawn("python", ["./pythonFiles/servicesNearby.py", center, radius, service, key]);
+  const pythonProcess2 = spawn("python", ["./pythonFiles/servicesNearby2.py", center, radius, service, key]);
   pythonProcess2.stdout.on("data", function(data){
     mystr = data.toString();
     myjson = JSON.parse(mystr);
 
     let coordinates = myjson.coordinates;
 
-    res.render("servicesMap", {key: key, results: coordinates});
+    res.render("servicesMap", {key: key, results: coordinates, addresses: myjson.addresses});
   });
 });
 
