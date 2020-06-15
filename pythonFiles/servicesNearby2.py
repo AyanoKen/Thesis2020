@@ -16,7 +16,7 @@ coordinateList = [invertedCentral]
 
 addressList = []
 
-increments = 1
+increments = 2
 
 if radius <= 3:
     minlong = float(central[1]) - radius/100.0
