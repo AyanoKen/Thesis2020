@@ -68,6 +68,36 @@ app.post("/services", function(req, res){
   });
 });
 
+app.get("/services/:center&:radius&:service", function(req, res){
+  const center = req.params.center;
+  const radius = req.params.radius;
+  const service = req.params.service;
+
+  const pythonProcess2 = spawn("python", ["./pythonFiles/servicesNearby2.py", center, radius, service, key]);
+  pythonProcess2.stdout.on("data", function(data){
+    mystr = data.toString();
+    myjson = JSON.parse(mystr);
+
+    let i = 0;
+    let responseData = [];
+
+    let coordinates = myjson.coordinates;
+
+    coordinates = coordinates.split(";");
+
+    myjson.addresses.forEach(function(address){
+      let temp = {
+        location: coordinates[i].split(",").reverse(),
+        address: address
+      }
+
+      responseData.push(temp);
+    });
+
+    res.send(responseData);
+  });
+});
+
 app.post("/savePoints", function(req, res){
   const points = (req.body.points).split(";");
 
