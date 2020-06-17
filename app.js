@@ -138,6 +138,18 @@ app.post("/liveLocation", function(req, res){
   res.render("liveLocation", {key: key});
 });
 
+app.get("/speak", function(req, res){
+  const pythonProcess2 = spawn("python", ["./pythonFiles/SpeechRecognition.py"]);
+  pythonProcess2.stdout.on("data", function(data){
+    mystr = data.toString();
+    myjson = JSON.parse(mystr);
+
+    let text = myjson.text;
+
+    res.send(text)
+  });
+})
+
 var port = process.env.PORT;
 if (port == null || port == "") {
   port = 3000;
