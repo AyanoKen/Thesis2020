@@ -48,8 +48,47 @@
           <p>4. Click the below to show your live location on the map</p>
           <button type="submit" class="btn btn-dark">Open Map</button>
         </form>
-
       </div>
     </div>
   </body>
+  <!-- <script>
+    let constraintObj = {
+      audio: true,
+      video: false
+    };
+
+    <p>4. Audio</p>
+    <p>
+      <button id="btnStart">Start Recording</button>
+      <button id="btnEnd">Stop Recording</button>
+    </p>
+    <audio id="aud" controls></audio>
+
+    navigator.mediaDevices.getUserMedia(constraintObj).then(function(mediaStreamObj){
+      let start = document.getElementById('btnStart');
+      let stop = document.getElementById('btnEnd');
+      let savedFile = document.getElementById('aud');
+      let mediaRecorder = new MediaRecorder(mediaStreamObj);
+      let chunks = [];
+
+      start.addEventListener("click", function(ev){
+        mediaRecorder.start();
+        console.log(mediaRecorder.state);
+      });
+      stop.addEventListener("click", function(ev){
+        mediaRecorder.stop();
+        console.log(mediaRecorder.state);
+      });
+
+      mediaRecorder.ondataavailable = function(ev){chunks.push(ev.data);}
+      mediaRecorder.onstop = function(ev){
+        let blob = new Blob(chunks, {type: 'audio/*;'});
+        chunks = [];
+        let audioUrl = window.URL.createObjectURL(blob);
+        savedFile.src = audioUrl;
+      }
+    }).catch(function(err){
+      console.log(err);
+    })
+  </script> -->
 </html>
