@@ -1,3 +1,2 @@
 requests==2.23.0
-PyAudio==0.2.11
-SpeechRecognition==3.8.1
+beautifulsoup4==4.9.1
