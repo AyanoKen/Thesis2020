@@ -150,6 +150,24 @@ app.get("/speak", function(req, res){
   });
 })
 
+app.post("/getReviews", function(req, res){
+  let speech = req.body.speech;
+
+  console.log(speech)
+
+  const pythonProcess2 = spawn("python", ["./pythonFiles/techReviews.py", speech]);
+  pythonProcess2.stdout.on("data", function(data){
+    mystr = data.toString();
+    myjson = JSON.parse(mystr);
+
+    if(myjson.Response == 200){
+      res.send(myjson.articles);
+    }else{
+      res.send("Invalid Command, Try Again");
+    }
+  });
+});
+
 var port = process.env.PORT;
 if (port == null || port == "") {
   port = 3000;

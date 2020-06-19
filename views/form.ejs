@@ -48,7 +48,21 @@
           <p>4. Click the below to show your live location on the map</p>
           <button type="submit" class="btn btn-dark">Open Map</button>
         </form>
+
+        <br><br>
+
+        <p>5. Speak to get reviews on a specific tech related product</p>
+        <p>Eg: Say "Get reviews on Samsung" or "reviews on Samsung"</p>
+        <button class="btn btn-dark" onclick="listen()">Say Stuff</button>
+        <span id="text"></span>
+        <form action="/getReviews" method="POST">
+          <input type="hidden" id="speech" name="speech" value="">
+          <button type="submit" class="btn btn-dark">Submit</button>
+        </form>
+
       </div>
     </div>
   </body>
+
+  <script src="main.js"></script>
 </html>
