@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 
 company = sys.argv[1]
 
-if _ in company:
+if "_" in company:
     company = " ".join(company.split("_"))
 
 chrome_options = webdriver.ChromeOptions()
