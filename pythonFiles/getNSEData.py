@@ -17,7 +17,7 @@ wd = webdriver.Chrome('chromedriver',chrome_options=chrome_options)
 driver = webdriver.Chrome('chromedriver',chrome_options=chrome_options)
 driver.get("https://economictimes.indiatimes.com/markets")
 
-driver.implicitly_wait(5)
+driver.implicitly_wait(2)
 driver.find_element_by_name("ticker").send_keys(company)
 driver.find_element_by_name("ticker").send_keys(Keys.ENTER)
 
