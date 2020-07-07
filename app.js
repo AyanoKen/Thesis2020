@@ -150,6 +150,16 @@ app.get("/speak", function(req, res){
   });
 });
 
+app.get("/getnsedata/:company", function(req, res){
+  const pythonProcess = spawn("python", ["./pythonFiles/getNSEData.py", req.params.company]);
+  pythonProcess.stdout.on("data", function(data){
+    mystr = data.toString();
+    myjson = JSON.parse(mystr);
+
+    res.send(myjson);
+  });
+});
+
 var port = process.env.PORT;
 if (port == null || port == "") {
   port = 3000;
